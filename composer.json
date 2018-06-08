@@ -22,9 +22,11 @@
         "tightenco/collect": "^5.6"
     },
     "require-dev": {
+        "guzzlehttp/guzzle": "^6.3.2",
         "guzzlehttp/psr7": "^1.0",
         "larapack/dd": "^1.0",
         "php-http/guzzle6-adapter": "^1.1.1",
+        "php-http/message": "^1.6",
         "php-http/mock-client": "^1.0",
         "phpunit/phpunit": "^7.0"
     },
