@@ -45,15 +45,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Cappuc\\RestCountries\\RestCountriesServiceProvider"
-            ],
-            "aliases": {
-                "RestCountries": "Cappuc\\RestCountries\\RestCountriesFacade"
-            }
-        }
     }
 }
