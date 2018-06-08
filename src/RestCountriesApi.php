@@ -31,8 +31,8 @@ class RestCountriesApi implements CountryApi
     /**
      * @param       $url
      * @param array $fields
-     * @return array
-     * @throws \Exception
+     * @return Collection
+     * @throws \Http\Client\Exception
      */
     protected function request($url, $fields = [])
     {
@@ -40,27 +40,32 @@ class RestCountriesApi implements CountryApi
             'fields' => implode(';', $fields),
         ] : [];
 
-        try {
-            $response = $this->client->sendRequest(
-                $this->requestFactory->createRequest('GET', $this->baseUrl . $url . '?' . http_build_query($params))
-            )->getBody()->getContents();
+        $response = $this->client->sendRequest(
+            $this->requestFactory->createRequest('GET', $this->baseUrl . $url . '?' . http_build_query($params))
+        )->getBody()->getContents();
 
-            return json_decode($response, true);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage());
-        } catch (\Http\Client\Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
+        return $this->formatResponse($response);
+    }
+
+    /**
+     * @param string $jsonResponse
+     * @return Collection
+     */
+    protected function formatResponse(string $jsonResponse): Collection
+    {
+        return (new Collection(json_decode($jsonResponse, true)))->mapInto(Country::class);
     }
 
     /**
      * @param array $fields
      * @return Collection
      * @throws \Exception
+     * @throws \Http\Client\Exception
      */
-    public function all($fields = []): Collection
+    public
+    function all($fields = []): Collection
     {
-        return (new Collection($this->request('all', $fields)))->mapInto(Country::class);
+        return $this->request('all', $fields);
     }
 
     /**
@@ -68,10 +73,11 @@ class RestCountriesApi implements CountryApi
      * @param array  $fields
      * @return Collection
      * @throws \Exception
+     * @throws \Http\Client\Exception
      */
     public function findByCallingCode($callingCode, $fields = []): Collection
     {
-        return (new Collection($this->request("callingcode/{$callingCode}", $fields)))->mapInto(Country::class);
+        return $this->request("callingcode/{$callingCode}", $fields);
     }
 
     public function findByCurrency($currency, $fields = []): Collection

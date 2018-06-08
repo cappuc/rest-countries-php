@@ -24,7 +24,7 @@
     "require-dev": {
         "guzzlehttp/psr7": "^1.0",
         "larapack/dd": "^1.0",
-        "php-http/guzzle6-adapter": "^1.1",
+        "php-http/guzzle6-adapter": "^1.1.1",
         "php-http/mock-client": "^1.0",
         "phpunit/phpunit": "^7.0"
     },
