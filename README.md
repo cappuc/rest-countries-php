@@ -18,8 +18,9 @@ composer require cappuc/rest-countries-php
 ## Usage
 
 ``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
+$restCountriesApi = new Cappuc\RestCountries\RestCountriesApi($httpClient, $httpMessageFactory);
+
+$restCountriesApi->all();
 ```
 
 ### Testing
