@@ -8,8 +8,6 @@ interface CountryApi
 {
     public function all($fields = []): Collection;
 
-    public function findByCallingCode($callingCode, $fields = []): Collection;
-
     public function findByCurrency($currency, $fields = []): Collection;
 
     public function findByLanguage($language, $fields = []): Collection;

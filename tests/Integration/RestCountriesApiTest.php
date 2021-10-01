@@ -2,10 +2,10 @@
 
 namespace Cappuc\RestCountries\Tests\Integration;
 
-use Http\Adapter\Guzzle6\Client;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Cappuc\RestCountries\Country;
 use Cappuc\RestCountries\RestCountriesApi;
+use Http\Adapter\Guzzle6\Client;
+use Http\Message\MessageFactory\GuzzleMessageFactory;
 use PHPUnit\Framework\TestCase;
 
 class RestCountriesApiTest extends TestCase
@@ -38,22 +38,15 @@ class RestCountriesApiTest extends TestCase
     /** @test */
     public function it_can_filter_results()
     {
-        $response = $this->api->all(['name', 'alpha2Code']);
+        $response = $this->api->all(['name', 'alpha2Code', 'alpha3Code', 'callingCodes', 'translations']);
 
-        $response->each(function(Country $country) {
-            $this->assertCount(2, $country->toArray());
+        $response->each(function (Country $country) {
+            $this->assertCount(5, $country->toArray());
             $this->assertArrayHasKey('name', $country->toArray());
             $this->assertArrayHasKey('alpha2Code', $country->toArray());
+            $this->assertArrayHasKey('alpha3Code', $country->toArray());
+            $this->assertArrayHasKey('callingCodes', $country->toArray());
+            $this->assertArrayHasKey('translations', $country->toArray());
         });
-    }
-
-    /** @test */
-    public function it_can_find_countries_by_calling_code()
-    {
-        $response = $this->api->findByCallingCode('39');
-
-        $this->assertCount(1, $response);
-        $this->assertContainsOnlyInstancesOf(Country::class, $response);
-        $this->assertEquals('Italy', $response->first()->name);
     }
 }

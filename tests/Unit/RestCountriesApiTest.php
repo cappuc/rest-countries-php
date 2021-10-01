@@ -36,8 +36,8 @@ class RestCountriesApiTest extends TestCase
 
         $this->assertCount(1, $requests);
         $this->assertEquals('GET', $requests[0]->getMethod());
-        $this->assertEquals('restcountries.eu', $requests[0]->getUri()->getHost());
-        $this->assertEquals('/rest/v2/all', $requests[0]->getUri()->getPath());
+        $this->assertEquals('restcountries.com', $requests[0]->getUri()->getHost());
+        $this->assertEquals('/v3/all', $requests[0]->getUri()->getPath());
         $this->assertEquals('', $requests[0]->getUri()->getQuery());
     }
 
@@ -58,22 +58,8 @@ class RestCountriesApiTest extends TestCase
 
         $this->assertCount(1, $requests);
         $this->assertEquals('GET', $requests[0]->getMethod());
-        $this->assertEquals('restcountries.eu', $requests[0]->getUri()->getHost());
-        $this->assertEquals('/rest/v2/all', $requests[0]->getUri()->getPath());
-        $this->assertEquals('fields=name;alpha2Code', urldecode($requests[0]->getUri()->getQuery()));
-    }
-
-    /** @test */
-    public function it_can_find_countries_by_calling_code()
-    {
-        $this->api->findByCallingCode('39');
-
-        $requests = $this->client->getRequests();
-
-        $this->assertCount(1, $requests);
-        $this->assertEquals('GET', $requests[0]->getMethod());
-        $this->assertEquals('restcountries.eu', $requests[0]->getUri()->getHost());
-        $this->assertEquals('/rest/v2/callingcode/39', $requests[0]->getUri()->getPath());
-        $this->assertEquals('', $requests[0]->getUri()->getQuery());
+        $this->assertEquals('restcountries.com', $requests[0]->getUri()->getHost());
+        $this->assertEquals('/v3/all', $requests[0]->getUri()->getPath());
+        $this->assertEquals('fields=name,cca2', urldecode($requests[0]->getUri()->getQuery()));
     }
 }
